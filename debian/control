@@ -1,0 +1,18 @@
+Source: halium-wrappers
+Maintainer: Eugenio Paolantonio (g7) <me@medesimo.eu>
+Section: misc
+Priority: optional
+Build-Depends: debhelper (>= 10)
+Standards-Version: 4.5.0.3
+Vcs-Browser: https://github.com/hybris-mobian/halium-wrappers
+Vcs-Git: https://github.com/hybris-mobian-releng/halium-wrappers.git
+
+Package: halium-wrappers
+Architecture: all
+Depends: ${misc:Depends},
+         lxc-android,
+         util-linux
+Description: Convenience wrappers to Android utilities
+ This package provides some convenience wrappers to
+ some utilities available from the Android system
+ image.

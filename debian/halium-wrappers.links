@@ -1,0 +1,8 @@
+/usr/lib/halium-wrappers/halium-lxc-exec.sh /usr/sbin/android_bootctl
+/usr/lib/halium-wrappers/halium-lxc-exec.sh /usr/sbin/android_logcat
+/usr/lib/halium-wrappers/halium-lxc-exec.sh /usr/sbin/android_lshal
+/usr/lib/halium-wrappers/halium-lxc-exec.sh /usr/sbin/android_getprop
+/usr/lib/halium-wrappers/halium-lxc-exec.sh /usr/sbin/android_setprop
+/usr/lib/halium-wrappers/halium-lxc-exec.sh /usr/sbin/android_reboot
+/usr/lib/halium-wrappers/halium-lxc-exec.sh /usr/sbin/logcat
+/usr/lib/halium-wrappers/halium-lxc-exec.sh /usr/sbin/lshal
