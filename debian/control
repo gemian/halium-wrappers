@@ -2,13 +2,17 @@ Source: halium-wrappers
 Maintainer: Eugenio Paolantonio (g7) <me@medesimo.eu>
 Section: misc
 Priority: optional
-Build-Depends: debhelper (>= 10)
+Build-Depends: debhelper (>= 10),
+               pkg-config,
+               libhybris-dev,
+               libhybris-common-dev,
+               libandroid-properties-dev,
 Standards-Version: 4.5.0.3
 Vcs-Browser: https://github.com/hybris-mobian/halium-wrappers
 Vcs-Git: https://github.com/hybris-mobian-releng/halium-wrappers.git
 
 Package: halium-wrappers
-Architecture: all
+Architecture: any
 Depends: ${misc:Depends},
          lxc-android,
          util-linux
