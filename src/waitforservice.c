@@ -22,6 +22,7 @@
 #include <string.h>
 #include <fnmatch.h>
 #include <dlfcn.h>
+#include <unistd.h>
 
 #include <hybris/properties/properties.h>
 #include <hybris/common/binding.h>
@@ -64,6 +65,20 @@ static void ensure_bionic_libc_initialized()
     }
 }
 
+static void wait_for_property_service()
+{
+    int success;
+
+    do {
+        success = access("/dev/socket/property_service", F_OK);
+
+        if (success == -1) {
+            usleep(100000);
+        }
+
+    } while (success == -1);
+}
+
 static void parse_properties(const char* key, const char* name, void* cookie)
 {
     arguments_t *args = (arguments_t *)cookie;
@@ -92,6 +107,8 @@ int main(int argc, char **argv)
         fprintf(stderr, "USAGE: waitforservice PROP1 PROP2 ... PROPN\n");
         return 1;
     }
+
+    wait_for_property_service();
 
     ensure_bionic_libc_initialized();
 
