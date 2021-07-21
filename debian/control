@@ -14,7 +14,6 @@ Vcs-Git: https://github.com/hybris-mobian-releng/halium-wrappers.git
 Package: halium-wrappers
 Architecture: any
 Depends: ${misc:Depends},
-         lxc-android,
          util-linux
 Description: Convenience wrappers to Android utilities
  This package provides some convenience wrappers to
