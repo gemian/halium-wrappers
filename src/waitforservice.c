@@ -31,6 +31,8 @@ static void *libc = NULL;
 
 static int tripped = 0;
 
+static const char* property_value;
+
 static int (*bionic___system_property_wait_any)(int __old_serial) = NULL;
 
 typedef struct {
@@ -89,7 +91,7 @@ static void parse_properties(const char* key, const char* name, void* cookie)
     }
 
     for (int i = 1; i < args->count; i++) {
-        if (fnmatch(args->argv[i], key, FNM_NOESCAPE) == 0 && strcmp(name, "running") == 0) {
+        if (fnmatch(args->argv[i], key, FNM_NOESCAPE) == 0 && strcmp(name, property_value) == 0) {
             /* Found something! */
             fprintf(stdout, "%s: %s\n", key, name);
             tripped = 1;
@@ -106,6 +108,13 @@ int main(int argc, char **argv)
     if (argc == 1) {
         fprintf(stderr, "USAGE: waitforservice PROP1 PROP2 ... PROPN\n");
         return 1;
+    }
+
+    const char* selected_property_value = getenv("WAITFORSERVICE_VALUE");
+    if (selected_property_value != NULL) {
+        property_value = selected_property_value;
+    } else {
+        property_value = "running";
     }
 
     wait_for_property_service();
