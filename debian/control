@@ -13,9 +13,19 @@ Vcs-Git: https://github.com/hybris-mobian-releng/halium-wrappers.git
 
 Package: halium-wrappers
 Architecture: any
+Multi-Arch: foreign
 Depends: ${misc:Depends},
          util-linux
 Description: Convenience wrappers to Android utilities
  This package provides some convenience wrappers to
  some utilities available from the Android system
  image.
+
+Package: libtls-padding0
+Architecture: any
+Multi-Arch: same
+Depends: ${misc:Depends}
+Description: Library that reserves some space into the Thread Local Storage
+ This library, which is meant to be LD_PRELOADed, tries to workaround
+ potential issues on libhybris devices where some failing syscall on the
+ bionic side might trigger a stack corruption while setting errno.

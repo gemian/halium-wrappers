@@ -2,3 +2,7 @@
 
 %:
 	dh $@
+
+override_dh_fixperms:
+	# Keep suid bit
+	dh_fixperms --exclude libtls-padding.so

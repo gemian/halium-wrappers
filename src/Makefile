@@ -1,3 +1,6 @@
+TRIPLET ?= $(shell gcc -dumpmachine)
+DESTDIR ?= /
+
 PACKAGES = libandroid-properties
 
 CFLAGS = -O2 $(shell pkg-config --cflags $(PACKAGES))
@@ -13,17 +16,22 @@ SYMLINKS = \
 	logcat \
 	lshal
 
-all: waitforservice
+all: waitforservice libtls-padding.so
 
 waitforservice: waitforservice.c
 	# hybris-common lacks a proper pkg-config definition
 	$(CC) $(CFLAGS) $< -o $@ $(LIBS) -lhybris-common
 
-install: waitforservice halium-lxc-exec.sh
+libtls-padding.so: libtls-padding.c
+	$(CC) -shared $< -o $@
+
+install: waitforservice libtls-padding.so halium-lxc-exec.sh
 	install -d $(DESTDIR)/usr/bin
 	install -d $(DESTDIR)/usr/sbin
 	install -d $(DESTDIR)/usr/lib/halium-wrappers
+	install -d $(DESTDIR)/usr/lib/$(TRIPLET)
 	install -m 755 waitforservice $(DESTDIR)/usr/bin
+	install -m 4644 libtls-padding.so $(DESTDIR)/usr/lib/$(TRIPLET)
 	install -m 755 halium-lxc-exec.sh $(DESTDIR)/usr/lib/halium-wrappers
 
 	for link in $(SYMLINKS); do \
