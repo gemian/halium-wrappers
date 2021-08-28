@@ -1,8 +1,41 @@
 #!/usr/bin/make -f
 
+include /usr/share/dpkg/architecture.mk
+
+libdir := usr/lib/$(DEB_HOST_MULTIARCH)
+
+ifeq ($(DEB_HOST_ARCH),$(findstring $(DEB_HOST_ARCH), armhf))
+FLATPAK_ARCH = arm
+FLATPAK_LIBDIR = lib
+endif
+
+ifeq ($(DEB_HOST_ARCH),$(findstring $(DEB_HOST_ARCH), arm64))
+FLATPAK_ARCH = aarch64
+FLATPAK_LIBDIR = lib64
+endif
+
+ifeq ($(DEB_HOST_ARCH),$(findstring $(DEB_HOST_ARCH), i386))
+FLATPAK_ARCH = x86
+FLATPAK_LIBDIR = lib
+endif
+
+ifeq ($(DEB_HOST_ARCH),$(findstring $(DEB_HOST_ARCH), amd64))
+FLATPAK_ARCH = x86_64
+FLATPAK_LIBDIR = lib64
+endif
+
+FLATPAK_EXTENSION_TARGET = var/lib/flatpak/extension/org.freedesktop.Platform.GL.hybris/$(FLATPAK_ARCH)/1.4/$(FLATPAK_LIBDIR)
+
 %:
 	dh $@
 
 override_dh_fixperms:
 	# Keep suid bit
 	dh_fixperms --exclude libtls-padding.so
+
+override_dh_install:
+	dh_install
+
+	# Create the flatpak extension
+	mkdir -p $(CURDIR)/debian/flatpak-extension-gl-hybris-tls-padding/$(FLATPAK_EXTENSION_TARGET)
+	cp -Ra $(CURDIR)/debian/libtls-padding0/$(libdir)/* $(CURDIR)/debian/flatpak-extension-gl-hybris-tls-padding/$(FLATPAK_EXTENSION_TARGET)
