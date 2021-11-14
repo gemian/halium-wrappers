@@ -29,3 +29,18 @@ Description: Library that reserves some space into the Thread Local Storage
  This library, which is meant to be LD_PRELOADed, tries to workaround
  potential issues on libhybris devices where some failing syscall on the
  bionic side might trigger a stack corruption while setting errno.
+
+Package: flatpak-extension-gl-hybris-tls-padding
+# We're tied to the architecture supported by libhybris+flatpak
+Architecture: amd64 arm64 armhf i386
+# hard dependencies are not really needed since we're going to
+# copy the libraries anyway, but it's good to avoid eventual desyncs
+Depends: ${misc:Depends},
+         flatpak-extension-gl-hybris,
+         libtls-padding0 (= ${binary:Version}),
+Description: tls-padding library shipped for the org.freedesktop.Platform.GL hybris runtime extension
+ This package contains the tls-padding library shipped inside the
+ hybris extension for flatpak's org.freedesktop.platform.GL runtime.
+ .
+ If you use libtls-padding0 and flatpak, it might be a good idea
+ installing this.
