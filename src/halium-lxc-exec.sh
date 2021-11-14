@@ -12,7 +12,7 @@ ANDROID_SEARCH_PATH="${LXC_CONTAINER_PATH}/system/bin ${LXC_CONTAINER_PATH}/syst
 
 ########################################################################
 
-[ "${USER}" == "root" ] || error "This wrapper must be run from root"
+[ "${UID}" == 0 ] || error "This wrapper must be run from root"
 [ -e "${LXC_CONTAINER_PATH}" ] || error "Unable to find LXC container"
 
 found_path=$(whereis -b -B ${ANDROID_SEARCH_PATH} -f ${TARGET_BINARY} | head -n 1 | awk '{ print $2 }')
