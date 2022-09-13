@@ -28,14 +28,19 @@ waitforservice: waitforservice.c
 libtls-padding.so: libtls-padding.c
 	$(CC) -shared $< -o $@
 
-install: waitforservice libtls-padding.so halium-lxc-exec.sh
+install: waitforservice libtls-padding.so halium-lxc-exec.sh android-service.sh systemd/android-service@.service systemd/android-service@hwcomposer.service.d/10-hwcomposer.conf
 	install -d $(DESTDIR)/usr/bin
 	install -d $(DESTDIR)/usr/sbin
 	install -d $(DESTDIR)/usr/lib/halium-wrappers
 	install -d $(DESTDIR)/usr/lib/$(TRIPLET)
+	install -d $(DESTDIR)/usr/lib/systemd/system
+	install -d $(DESTDIR)/usr/lib/systemd/system/android-service@hwcomposer.service.d
 	install -m 755 waitforservice $(DESTDIR)/usr/bin
 	install -m 4644 libtls-padding.so $(DESTDIR)/usr/lib/$(TRIPLET)
 	install -m 755 halium-lxc-exec.sh $(DESTDIR)/usr/lib/halium-wrappers
+	install -m 755 android-service.sh $(DESTDIR)/usr/lib/halium-wrappers
+	install -m 644 systemd/android-service@.service $(DESTDIR)/usr/lib/systemd/system
+	install -m 644 systemd/android-service@hwcomposer.service.d/10-hwcomposer.conf $(DESTDIR)/usr/lib/systemd/system/android-service@hwcomposer.service.d
 
 	for link in $(SYMLINKS); do \
 		ln -s /usr/lib/halium-wrappers/halium-lxc-exec.sh $(DESTDIR)/usr/sbin/$${link}; \

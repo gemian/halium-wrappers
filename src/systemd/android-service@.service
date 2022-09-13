@@ -1,0 +1,13 @@
+[Unit]
+Description=Android service: %i
+Requires=lxc@android.service
+After=lxc@android.service
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/usr/lib/halium-wrappers/android-service.sh %i start
+ExecStop=/usr/lib/halium-wrappers/android-service.sh %i stop
+
+[Install]
+WantedBy=multi-user.target
