@@ -13,6 +13,9 @@ SYMLINKS = \
 	android_getprop \
 	android_setprop \
 	android_reboot \
+	android_stop \
+	android_start \
+	android_kill \
 	logcat \
 	lshal
 
