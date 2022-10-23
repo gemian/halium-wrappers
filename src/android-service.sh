@@ -41,9 +41,11 @@ stop() {
 	# Try to gracefully stop via the Android-provided facilities
 	android_stop ${service_service}
 
-	WAITFORSERVICE_VALUE="stopped" timeout 5 waitforservice init.svc.${service_service}
+	if [ "${ANDROID_SERVICE_FORCE_KILL}" != "yes" ]; then
+		WAITFORSERVICE_VALUE="stopped" timeout 5 waitforservice init.svc.${service_service}
+	fi
 
-	if [ "${?}" == "124" ]; then
+	if [ "${ANDROID_SERVICE_FORCE_KILL}" == "yes" ] || [ "${?}" == "124" ]; then
 		# Timeout reached, forcibly terminate the service
 		android_kill -9 $(getprop init.svc_debug_pid.${service_service})
 		setprop init.svc.${service_service} stopped
