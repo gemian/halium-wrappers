@@ -1,7 +1,7 @@
 [Unit]
 Description=Android service: %i
-Requires=lxc@android.service
-After=lxc@android.service
+Requires=lxc-android.service
+After=lxc-android.service
 ConditionPathExists=!/system-update
 
 [Service]
