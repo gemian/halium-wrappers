@@ -1,5 +1,6 @@
 Source: halium-wrappers
-Maintainer: Eugenio Paolantonio (g7) <me@medesimo.eu>
+Maintainer: Adam Boardman <adamboardman@gmail.com>
+XSBC-Original-Maintainer: Eugenio Paolantonio (g7) <me@medesimo.eu>
 Section: misc
 Priority: optional
 Build-Depends: debhelper (>= 10),
